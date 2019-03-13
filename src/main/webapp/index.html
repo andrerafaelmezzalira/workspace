@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html data-ng-app="app">
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+<title>Tem mesa livre?</title>
+
+<!-- CSS  -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+	type="text/css" rel="stylesheet" media="screen,projection" />
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.css"
+	type="text/css" rel="stylesheet" media="screen,projection" />
+<link href="style.css" type="text/css" rel="stylesheet"
+	media="screen,projection" />
+
+</head>
+
+<body data-ng-controller="LoginController as ctrlLogin">
+
+	<!-- Modal Login  -->
+	<div id="modal" class="modal">
+		<div class="modal-content">
+			<h5>Login</h5>
+			<p>Informe seu nome de usuário, se não tiver ainda, informe um
+				nome de usuário para se cadastrar</p>
+
+			<div class="row">
+				<div class="col s12 input-field">
+					<input autofocus="autofocus"
+						placeholder="Informe um nome de usuário"
+						data-ng-model="ctrlLogin.person.name" id="name" type="text">
+					<label for="name">Nome</label>
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<a href="" data-ng-click="ctrlLogin.login();"
+					title="Caso tenha informado um nome de usuário, o sistema irá realizar o login e fechar a janela"
+					class="modal-action modal-close waves-effect waves-light btn">Fechar</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- Nav Login/Logout  -->
+	<nav class="background-color-green lighten-1" role="navigation">
+		<div class="nav-wrapper container">
+			<div class="right">
+				<a data-ng-if="!ctrlLogin.person.id" class="modal-trigger" href="#"
+					title="Login" data-target="modal">Login</a><a
+					class="dropdown-trigger" href="#" data-target="dropdown"
+					data-ng-if="ctrlLogin.person.id" href="#" title="Logout">{{ctrlLogin.person.name}}
+				</a>
+				<ul id="dropdown" class="dropdown-content">
+					<li><a data-ng-click="ctrlLogin.logout()">Sair</a></li>
+				</ul>
+
+			</div>
+			<div class="left">
+				<a href="" data-ng-if="ctrlLogin.template"
+					data-ng-click="ctrlLogin.template = undefined;">Início</a>
+			</div>
+		</div>
+	</nav>
+	<div class="center loading"></div>
+
+	<!-- Description section page initial -->
+	<div data-ng-if="!ctrlLogin.template" class="container">
+		<h2 class="header center black-text">Tem mesa livre?</h2>
+		<div class="row center">
+			<h5 class="header col s12 light">A novidade é que se você tiver
+				uma sala no seu escritório livre, ou uma mesa em sua casa, você
+				poderá lucrar com isto!</h5>
+		</div>
+
+		<div class="section">
+			<!--   Icon Section   -->
+			<div class="row">
+				<div class="col s12 m6 cursor-pointer"
+					title="Acessar área de cadastro de lugar"
+					data-ng-click="ctrlLogin.template = 'app/view/admin/index.html';">
+					<div class="icon-block">
+						<h2 class="center color-green">
+							<i class="material-icons">settings</i>
+						</h2>
+						<h5 class="center">Tenho um espaço e quero alugar</h5>
+
+						<p class="light">Se você quiser alugar um espaço em seu
+							estabelecimento, uma sala, um escritório ou qualquer outro tipo
+							de espaço. Você faz o cadastro do espaço e disponibiliza para
+							quem precisa alugar. Acompanhe as reservas e configure as datas
+							diponíveis para o aluguel.</p>
+					</div>
+				</div>
+
+				<div class="col s12 m6 cursor-pointer"
+					title="Acessar área para pessoas que queiram alugar um lugar"
+					data-ng-click="ctrlLogin.template = 'app/view/user/index.html';">
+					<div class="icon-block">
+						<h2 class="center color-green">
+							<i class="material-icons">group</i>
+						</h2>
+						<h5 class="center">Quero alugar um espaço</h5>
+
+						<p class="light">Se você profissional nômade quer um lugar
+							para realizar uma reunião profissional ou até entre amigos para
+							discutir algum assunto. Basta fazer uma consulta de nossos
+							espaços de trabalho disponível, criar um usuário e reservar ou
+							alugar um horário disponível.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- include other pages -->
+	<div data-ng-if="ctrlLogin.template"
+		data-ng-include="ctrlLogin.template" class="container"></div>
+
+
+	<!-- Footer - Version  -->
+	<footer class="page-footer white black-text"
+		data-ng-controller="FooterController as footer">
+		<div class="container">{{footer.version}}</div>
+	</footer>
+
+	<!-- JS  -->
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.5/angular.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js"></script>
+
+	<script src="app/app.js"></script>
+	<script src="app/app.config.js"></script>
+
+	<script src="app/constant/version.constant.js"></script>
+	<script src="app/constant/day.of.the.week.constant.js"></script>
+	<script src="app/constant/description.workspace.constant.js"></script>
+
+	<script src="app/directive/modal.directive.js"></script>
+	<script src="app/directive/timepicker.directive.js"></script>
+	<script src="app/directive/datepicker.directive.js"></script>
+	<script src="app/directive/dropdown.directive.js"></script>
+	<script src="app/directive/slider.directive.js"></script>
+
+	<script src="app/service/session.service.js"></script>
+	<script src="app/service/person.service.js"></script>
+	<script src="app/service/workspace.service.js"></script>
+	<script src="app/service/geoname.service.js"></script>
+
+	<script src="app/controller/login.controller.js"></script>
+	<script src="app/controller/admin.controller.js"></script>
+	<script src="app/controller/user.controller.js"></script>
+	<script src="app/controller/footer.controller.js"></script>
+</body>
+
+</html>
+

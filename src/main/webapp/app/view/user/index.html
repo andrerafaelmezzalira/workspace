@@ -1,0 +1,104 @@
+<!-- find workspaces   -->
+<div data-ng-controller="UserController as userCtrl">
+
+	<div class="row">
+		<div class="col s12">
+			<h5 class="center-align">Pesquisar por espaços</h5>
+			<div class="row z-depth-5 border">
+
+				<div class="col s12 m6 l4">
+					<label for="state">Selecione um estado</label> <select
+						class="browser-default" data-ng-model="userCtrl.workspace.state"
+						id="state" data-ng-change="userCtrl.getCities()">
+						<option
+							data-ng-repeat="state in userCtrl.states"
+							value="{{state.geonameId}}">{{state.adminName1}}</option>
+					</select>
+				</div>
+
+				<div class="col s12 m6 l4">
+					<label for="city">Selecione um cidade</label> <select
+						class="browser-default" data-ng-model="userCtrl.workspace.city"
+						id="city" data-ng-change="userCtrl.getNeighborhoods()">
+						<option
+							data-ng-repeat="city in userCtrl.cities"
+							value="{{city.geonameId}}">{{city.name}}</option>
+					</select>
+				</div>
+
+				<div class="col s12 m6 l4">
+					<label for="neighborhood">Selecione um bairro</label> <select
+						class="browser-default"
+						data-ng-model="userCtrl.workspace.neighborhood" id="neighborhood">
+						<option
+							data-ng-repeat="neighborhood in userCtrl.neighborhoods"
+							value="{{neighborhood.geonameId}}">{{neighborhood.name}}</option>
+					</select>
+				</div>
+
+
+				<div class="col s12 m6 l4 input-field">
+					<input type="text" data-ng-model="userCtrl.workspace.initialDate"
+						class="datepicker" id="initialDate"> <label
+						for="initialDate">Data Inicial</label>
+				</div>
+
+				<div class="col s12 m6 l4 input-field">
+					<input type="text" data-ng-model="userCtrl.workspace.finalDate"
+						class="datepicker" id="finalDate"> <label for="finalDate">Data
+						Final</label>
+				</div>
+
+
+				<div class="col s12 m6 l4 input-field">
+					<input data-ng-model="userCtrl.workspace.costPerHour"
+						id="costPerHour" type="text"> <label for="costPerHour">Custo
+						por hora locada</label>
+				</div>
+
+				<div class="col s3 offset-s5">
+					<br /> <a title="Pesquisar" class="waves-effect waves-light btn">Pesquisar</a>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="center" data-ng-if="userCtrl.workspaces.length === 0">
+		Não há informações disponíveis ainda</div>
+	<div class="row z-depth-5 border"
+		data-ng-if="userCtrl.workspaces.length > 0">
+
+		<div class="col s12">
+			<ul class="collection">
+				<li
+					data-ng-repeat="workspace in userCtrl.workspaces track by $index"
+					class="collection-item avatar center">
+
+					<div class="slider">
+						<ul class="slides">
+							<li><img
+								src="http://casa3.com.br/wp-content/uploads/2016/05/como-criar-uma-sala-de-reuniao-bonita-e-confortavel.jpg">
+							</li>
+							<li><img
+								src="http://nucleocoworking.com.br/img/slider-salas-reuniao-4.jpg">
+							</li>
+							<li><img
+								src="http://www.liderinteriores.com.br/wp-content/uploads/2015/12/projeto-lider3-804x536.jpg">
+							</li>
+						</ul>
+					</div> <span class="title"> {{
+						userCtrl.descriptionsWorkspace[workspace.description -1 ].name }}</span><br />
+					<br />
+					<p>
+						Quantidade de Cadeiras: {{workspace.chairAmmount}} <br /> <br />
+						Quantidade de Mesas: {{workspace.tableAmmount}}<br /> <br />
+						Responsável: {{workspace.person.name}}<br /> <br /> Endereço:
+						{{workspace.address}}<br /> <br /> Custo por hora locada:
+						{{workspace.costPerHour}}<br /> <br />
+					</p> <a title="Reservar" class="center waves-effect waves-light btn">Reservar</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,161 @@
+<!-- create workspace   -->
+<div data-ng-controller="AdminController as adminCtrl">
+	<div class="row">
+		<div class="col s12">
+			<h5 class="center-align">Criar um espaço</h5>
+			<div class="row z-depth-5 border">
+
+				<div class="col s12 m6 l4">
+					<label for="state">Selecione um estado</label> <select
+						class="browser-default" data-ng-model="adminCtrl.workspace.state"
+						id="state" data-ng-change="adminCtrl.getCities()">
+						<option
+							data-ng-selected="adminCtrl.workspace.state == state.geonameId"
+							data-ng-repeat="state in adminCtrl.states"
+							value="{{state.geonameId}}">{{state.adminName1}}</option>
+					</select>
+				</div>
+
+				<div class="col s12 m6 l4">
+					<label for="city">Selecione um cidade</label> <select
+						class="browser-default" data-ng-model="adminCtrl.workspace.city"
+						id="city" data-ng-change="adminCtrl.getNeighborhoods()">
+						<option
+							data-ng-selected="adminCtrl.workspace.city == city.geonameId"
+							data-ng-repeat="city in adminCtrl.cities"
+							value="{{city.geonameId}}">{{city.name}}</option>
+					</select>
+				</div>
+
+				<div class="col s12 m6 l4">
+					<label for="neighborhood">Selecione um bairro</label> <select
+						class="browser-default"
+						data-ng-model="adminCtrl.workspace.neighborhood" id="neighborhood">
+						<option
+							data-ng-selected="adminCtrl.workspace.neighborhood == neighborhood.geonameId"
+							data-ng-repeat="neighborhood in adminCtrl.neighborhoods"
+							value="{{neighborhood.geonameId}}">{{neighborhood.name}}</option>
+					</select>
+				</div>
+
+				<div class="col s12 input-field">
+
+					<input data-ng-model="adminCtrl.workspace.address" type="text"
+						id="address"> <label for="endereco"
+						data-ng-class="adminCtrl.workspace.address ? 'active' : ''">Endereço</label>
+
+				</div>
+
+				<div class="col s12 m6 l4 input-field">
+					<input data-ng-model="adminCtrl.workspace.tableAmmount"
+						id="tableAmmount" type="text"> <label for="tableAmmount"
+						data-ng-class="adminCtrl.workspace.tableAmmount ? 'active' : ''">Quantidade
+						de Mesas</label>
+				</div>
+
+				<div class="col s12 m6 l4 input-field">
+					<input data-ng-model="adminCtrl.workspace.chairAmmount"
+						id="chairAmmount" type="text"> <label for="chairAmmount"
+						data-ng-class="adminCtrl.workspace.chairAmmount ? 'active' : ''">Quantidade
+						de Cadeiras</label>
+				</div>
+
+				<div class="col s12 m6 l4 input-field">
+					<input data-ng-model="adminCtrl.workspace.costPerHour"
+						id="costPerHour" type="text"> <label for="costPerHour"
+						data-ng-class="adminCtrl.workspace.costPerHour ? 'active' : ''">Custo
+						por hora locada</label>
+				</div>
+
+				<div class="col s12">
+					<label for="dayOfTheWeeks">Período Disponível </label><br />
+					<div class="inline"
+						data-ng-repeat="dayOfTheWeek in adminCtrl.dayOfTheWeeks">
+						<label> <input
+							data-ng-model="adminCtrl.workspace.dayOfTheWeeks[dayOfTheWeek.id]"
+							type="checkbox" /> <span>{{dayOfTheWeek.name}}</span>
+						</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</div>
+				</div>
+
+				<div class="col s12 m6 l4 input-field">
+					<input type="text" data-ng-model="adminCtrl.workspace.startingTime"
+						class="timepicker" id="startingTime"> <label
+						data-ng-class="adminCtrl.workspace.startingTime ? 'active' : ''"
+						for="startingTime">Hora Inicial</label>
+				</div>
+
+				<div class="col s12 m6 l4 input-field">
+					<input type="text" data-ng-model="adminCtrl.workspace.finalHour"
+						class="timepicker" id="finalHour"> <label
+						data-ng-class="adminCtrl.workspace.finalHour ? 'active' : ''"
+						for="finalHour">Hora Final</label>
+				</div>
+
+				<div class="col s12 m6 l4">
+					<label for="description">Descrição do Local</label> <select
+						class="browser-default"
+						data-ng-model="adminCtrl.workspace.description" id="description">
+						<option
+							data-ng-selected="adminCtrl.workspace.description == descriptionWorkspace.id"
+							data-ng-repeat="descriptionWorkspace in adminCtrl.descriptionsWorkspace"
+							value="{{descriptionWorkspace.id}}">{{descriptionWorkspace.name}}</option>
+					</select>
+				</div>
+
+
+				<div class="col s3 offset-s5">
+					<br /> <a data-ng-if="ctrlLogin.person.id"
+						data-ng-click="adminCtrl.save(); "
+						data-ng-disabled="!adminCtrl.workspace" title="Salvar"
+						class="waves-effect waves-light btn">Salvar</a> <a
+						data-ng-if="!ctrlLogin.person.id"
+						data-ng-disabled="!adminCtrl.workspace" title="Salvar"
+						data-target="modal"
+						class="modal-trigger waves-effect waves-light btn">Salvar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- list workspaces   -->
+	<div class="row" data-ng-if="ctrlLogin.person.id">
+		<div class="col s12">
+			<h5 class="center-align">Minhas áreas de trabalho</h5>
+			<div class="row z-depth-5 border">
+				<div class="col s12">
+					<table class="responsive-table centered striped">
+						<thead>
+							<tr>
+								<th>Estado</th>
+								<th>Descrição</th>
+								<th>Qtd. de Mesas</th>
+								<th>Qtd. de Cadeiras</th>
+								<th>Curso por hora locada</th>
+								<th>&nbsp;</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr
+								data-ng-repeat="workspace in adminCtrl.workspaces track by $index">
+								<td>{{ adminCtrl.getDescriptionState(workspace.state) }}</td>
+								<td>{{
+									adminCtrl.descriptionsWorkspace[workspace.description -1 ].name
+									}}</td>
+								<td>{{ workspace.tableAmmount }}</td>
+								<td>{{ workspace.chairAmmount }}</td>
+								<td>{{ workspace.costPerHour }}</td>
+								<td><i title="Editar"
+									data-ng-click="adminCtrl.edit(workspace)"
+									class="material-icons cursor-pointer">mode_edit</i> <i
+									title="Remover" data-ng-click="adminCtrl.remove(workspace.id)"
+									class="material-icons cursor-pointer">close</i></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
