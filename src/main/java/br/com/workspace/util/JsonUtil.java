@@ -15,6 +15,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class JsonUtil {
 
+	private JsonUtil() {
+		// private contructor
+	}
+	
 	/**
 	 * Convert string json in a object json
 	 * 
@@ -26,8 +30,8 @@ public class JsonUtil {
 	 * @throws IOException
 	 */
 	public static final <T> T fromJson(final String json, final Class<T> t)
-			throws JsonParseException, JsonMappingException, IOException {
-		return (T) new ObjectMapper().readValue(json, t);
+			throws IOException {
+		return new ObjectMapper().readValue(json, t);
 	}
 
 	/**
