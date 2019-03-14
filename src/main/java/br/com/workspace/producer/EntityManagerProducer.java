@@ -1,5 +1,6 @@
 package br.com.workspace.producer;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
@@ -23,7 +24,7 @@ public class EntityManagerProducer {
 	@Produces
 	@RequestScoped
 	public EntityManager getEntityManager() {
-		log.info("new instance entityManager request scoped");
+		log.log(Level.INFO, "new instance entityManager request scoped");
 		return entityManager;
 	}
 }

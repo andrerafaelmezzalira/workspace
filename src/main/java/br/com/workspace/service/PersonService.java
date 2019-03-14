@@ -1,12 +1,14 @@
 package br.com.workspace.service;
 
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import br.com.workspace.entity.Person;
+import br.com.workspace.exception.IdFoundException;
 import br.com.workspace.repository.PersonRepository;
 
 /**
@@ -25,25 +27,41 @@ public class PersonService {
 	private PersonRepository repository;
 
 	/**
-	 * Validate person. If not exists, create temporarily
+	 * Return Person by id
+	 * 
+	 * @param id
+	 * @return Person
+	 */
+	public Person getById(Integer id) {
+		return repository.getById(id);
+	}
+
+	/**
+	 * Return Person by name
+	 * 
+	 * @param name
+	 * @return Person
+	 */
+	public Person getByName(String name) {
+		List<Person> persons = repository.getByName(name.trim().toUpperCase());
+		if (!persons.isEmpty()) {
+			return persons.get(0);
+		}
+		return null;
+	}
+
+	/**
+	 * Persist a person
 	 * 
 	 * @param person
 	 * @return Person
+	 * @throws IdFoundException
 	 */
-	public Person login(Person person) {
-
-		// get person in bd if exists
-		Person personBd = null;
-		List<Person> persons = repository.getByName(person.getName().trim().toUpperCase());
-		if (!persons.isEmpty()) {
-			personBd = persons.get(0);
+	public Person persist(Person person) throws IdFoundException {
+		if (person.getId() != null) {
+			log.log(Level.SEVERE, "request incorrect persist {0} ", person.getId());
+			throw new IdFoundException("request incorrect");
 		}
-
-		if (personBd == null) {
-			// create person object temporarily
-			log.info("create person object temporarily");
-			return repository.persist(person);
-		}
-		return personBd;
+		return repository.persist(person);
 	}
 }

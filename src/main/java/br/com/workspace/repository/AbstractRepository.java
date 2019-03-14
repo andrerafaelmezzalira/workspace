@@ -2,6 +2,7 @@ package br.com.workspace.repository;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
@@ -27,7 +28,7 @@ public class AbstractRepository<T extends AbstractEntity<?>> {
 	private Class<T> entityClass;
 
 	/**
-	 * Represents the Implementing Entity Class
+	 * Represents the implementing entity class
 	 * 
 	 * @param entityClass
 	 */
@@ -42,10 +43,10 @@ public class AbstractRepository<T extends AbstractEntity<?>> {
 	 * @return entity
 	 */
 	public T persist(final T t) {
-		log.info("persist in " + t.getClass().getName());
+		log.log(Level.INFO, "persist in {0} ", t.getClass().getName());
 		entityManager.persist(t);
 		entityManager.flush();
-		log.info("generate id \n" + t.getId());
+		log.log(Level.INFO, "persist id {0} ", t.getId());
 		return t;
 	}
 
@@ -56,9 +57,10 @@ public class AbstractRepository<T extends AbstractEntity<?>> {
 	 * @return entity
 	 */
 	public T merge(final T t) {
-		log.info("update in " + t.getClass().getName());
+		log.log(Level.INFO, "merge in {0} ", t.getClass().getName());
 		entityManager.merge(t);
 		entityManager.flush();
+		log.log(Level.INFO, "merge id {0} ", t.getId());
 		return t;
 	}
 
@@ -68,9 +70,10 @@ public class AbstractRepository<T extends AbstractEntity<?>> {
 	 * @param t
 	 */
 	public void remove(final T t) {
-		log.info("delete in " + t.getClass().getName());
+		log.log(Level.INFO, "remove in {0} ", t.getClass().getName());
 		entityManager.remove(entityManager.contains(t) ? t : entityManager.merge(t));
 		entityManager.flush();
+		log.log(Level.INFO, "remove id {0} ", t.getId());
 	}
 
 	/**
@@ -80,17 +83,17 @@ public class AbstractRepository<T extends AbstractEntity<?>> {
 	 * @return t
 	 */
 	public T getById(final Serializable id) {
-		log.info("get by id in " + entityClass.getName() + " and id " + id);
+		log.log(Level.INFO, "get by id in {0} and id {1}", new Object[] { entityClass.getName(), id });
 		return entityManager.find(entityClass, id);
 	}
 
 	/**
-	 * Select from all table
+	 * Select all from the table
 	 * 
 	 * @return List<T>
 	 */
 	public List<T> get() {
-		log.info("get in " + entityClass.getName());
+		log.log(Level.INFO, "get all in {0} ", entityClass.getClass().getName());
 		final CriteriaQuery<T> criteriaQuery = entityManager.getCriteriaBuilder().createQuery(entityClass);
 		return entityManager.createQuery(criteriaQuery.select(criteriaQuery.from(entityClass))).getResultList();
 	}

@@ -5,6 +5,9 @@ CREATE TABLE person
   CONSTRAINT pk_person PRIMARY KEY (id)
 );
 
+ALTER TABLE person ADD
+  CONSTRAINT uq_person_name UNIQUE (name);
+
 CREATE TABLE workspace
 (
   id serial,

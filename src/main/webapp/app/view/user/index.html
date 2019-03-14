@@ -1,6 +1,18 @@
 <!-- find workspaces   -->
 <div data-ng-controller="UserController as userCtrl">
 
+	<!-- Modal not implemented  -->
+	<div id="modalNotImplemented" class="modal">
+		<div class="modal-content">
+			<h5>Não foi implementado</h5>
+			<p>Funcionalidade ainda não implementada. Desculpe</p>
+			<div class="modal-footer">
+				<a href="" title="Fechar"
+					class="modal-action modal-close waves-effect waves-light btn">Fechar</a>
+			</div>
+		</div>
+	</div>
+
 	<div class="row">
 		<div class="col s12">
 			<h5 class="center-align">Pesquisar por espaços</h5>
@@ -10,8 +22,7 @@
 					<label for="state">Selecione um estado</label> <select
 						class="browser-default" data-ng-model="userCtrl.workspace.state"
 						id="state" data-ng-change="userCtrl.getCities()">
-						<option
-							data-ng-repeat="state in userCtrl.states"
+						<option data-ng-repeat="state in userCtrl.states"
 							value="{{state.geonameId}}">{{state.adminName1}}</option>
 					</select>
 				</div>
@@ -20,8 +31,7 @@
 					<label for="city">Selecione um cidade</label> <select
 						class="browser-default" data-ng-model="userCtrl.workspace.city"
 						id="city" data-ng-change="userCtrl.getNeighborhoods()">
-						<option
-							data-ng-repeat="city in userCtrl.cities"
+						<option data-ng-repeat="city in userCtrl.cities"
 							value="{{city.geonameId}}">{{city.name}}</option>
 					</select>
 				</div>
@@ -30,8 +40,7 @@
 					<label for="neighborhood">Selecione um bairro</label> <select
 						class="browser-default"
 						data-ng-model="userCtrl.workspace.neighborhood" id="neighborhood">
-						<option
-							data-ng-repeat="neighborhood in userCtrl.neighborhoods"
+						<option data-ng-repeat="neighborhood in userCtrl.neighborhoods"
 							value="{{neighborhood.geonameId}}">{{neighborhood.name}}</option>
 					</select>
 				</div>
@@ -57,7 +66,8 @@
 				</div>
 
 				<div class="col s3 offset-s5">
-					<br /> <a title="Pesquisar" class="waves-effect waves-light btn">Pesquisar</a>
+					<br /> <a title="Pesquisar" data-target="modalNotImplemented"
+						class="modal-trigger waves-effect waves-light btn">Pesquisar</a>
 				</div>
 
 			</div>
@@ -96,7 +106,8 @@
 						Responsável: {{workspace.person.name}}<br /> <br /> Endereço:
 						{{workspace.address}}<br /> <br /> Custo por hora locada:
 						{{workspace.costPerHour}}<br /> <br />
-					</p> <a title="Reservar" class="center waves-effect waves-light btn">Reservar</a>
+					</p> <a title="Reservar" data-target="modalNotImplemented"
+					class="modal-trigger center waves-effect waves-light btn">Reservar</a>
 				</li>
 			</ul>
 		</div>

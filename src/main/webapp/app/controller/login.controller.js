@@ -1,6 +1,6 @@
 (function() {
 
-	function LoginController($scope, PersonService, SessionService) {
+	function LoginController($scope, LoginService, SessionService) {
 
 		var vm = this;
 
@@ -19,7 +19,7 @@
 			if (!vm.person.name) {
 				return;
 			}
-			PersonService.login(vm.person).then(function(response) {
+			LoginService.login(vm.person).then(function(response) {
 				vm.person = response.data;
 				// set token session
 				SessionService.setToken(JSON.stringify(vm.person));
@@ -40,7 +40,7 @@
 		}
 	}
 
-	LoginController.$inject = [ '$scope', 'PersonService', 'SessionService' ];
+	LoginController.$inject = [ '$scope', 'LoginService', 'SessionService' ];
 
 	angular.module('app.controllers').controller('LoginController',
 			LoginController);

@@ -4,17 +4,22 @@ import br.com.workspace.entity.Person;
 
 /**
  * 
- * login test person
+ * Login
  * 
  * @author andrerafaelmezzalira
  *
  */
-public class LoginClient extends PersonClient {
+public class LoginClient extends AbstractClient<Person> {
 
 	public static void main(String[] args) {
 		LoginClient client = new LoginClient();
 		Person person = new Person();
-		person.setName("joao");
+		person.setName("andre1");
 		client.log(client.post(person));
+	}
+
+	@Override
+	protected String getPathEntity() {
+		return "login";
 	}
 }

@@ -6,7 +6,7 @@
 		var vm = this;
 		vm.getCities = getCities;
 		vm.getNeighborhoods = getNeighborhoods;
-
+		
 		init();
 
 		function init() {
